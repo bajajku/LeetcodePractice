@@ -1,0 +1,76 @@
+class Solution(object):
+    def longestCommonSubsequence(self, text1, text2):
+        """
+        :type text1: str
+        :type text2: str
+        :rtype: int
+        """
+
+        # memo = [[-1] * len(text2) for _ in range(len(text1))]
+
+        # def function(i, j):
+
+        #     if(i == 0):
+        #         while j >= 0:
+        #             if(text1[i] == text2[j]):
+        #                 return 1
+        #             j -= 1
+        #         return 0
+            
+        #     elif(j == 0):
+        #         while i >= 0:
+        #             if(text1[i] == text2[j]):
+        #                 return 1
+        #             i -= 1
+        #         return 0
+
+        #     if(memo[i][j] != -1):
+        #         return memo[i][j]
+                    
+        #     nPick_J = function(i, j - 1)
+        #     nPick_I = function(i - 1, j)
+
+        #     nPick_= function(i - 1, j-1)
+
+        #     pick = 0
+        #     if(text1[i] == text2[j]):
+        #         pick =  1 + function(i-1, j-1)
+            
+        #     memo[i][j] = max(pick, nPick_I, nPick_J, nPick_)
+        #     return memo[i][j]
+
+        # return function(len(text1)-1, len(text2) -1)
+
+        memo = [[0] * len(text2) for _ in range(len(text1))]
+
+        # Base case
+        for j in range(len(text2)):
+            if text1[0] == text2[j]:
+                memo[0][j] = 1
+            elif j > 0:
+                memo[0][j] = memo[0][j-1]
+
+        for i in range(len(text1)):
+            if text2[0] == text1[i]:
+                memo[i][0] = 1
+            elif i > 0:
+                memo[i][0] = memo[i-1][0]
+        
+        # Loops
+        for i in range(1, len(text1)):
+            for j in range(1, len(text2)):
+
+                nPick_J = memo[i][j-1]
+                nPick_I = memo[i-1][j]
+
+                nPick_= memo[i-1][j-1]
+                pick = 0
+                if(text1[i] == text2[j]):
+                    pick =  1 + memo[i-1][j-1]
+                
+                memo[i][j] = max(pick, nPick_I, nPick_J, nPick_)
+        
+        return memo[-1][-1]
+
+
+            
