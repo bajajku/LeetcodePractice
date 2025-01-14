@@ -33,8 +33,6 @@ class Solution(object):
             if r == ROWS:  # Reached the end of the board
                 return True
             if c == COLS:  # Move to the next row
-                if(board[r][c - 1] not in rows[r]):
-                    return False
                 return backtrack(r + 1, 0)
             if board[r][c] != ".":  # Skip filled cells
                 return backtrack(r, c + 1)
