@@ -32,3 +32,27 @@ class Solution(object):
             return res
         
         return (function(0, 1, k))
+
+        # Bottom Up:
+
+        numTransac = k
+        memo = [[[0] * (k + 1) for _ in range(2)] for _ in range(len(prices) + 1)]
+
+        for i in range(len(prices) - 1, -1, -1):
+
+            for j in [0, 1]:
+
+                for k in range(1, numTransac + 1):
+                    res = 0
+                    if(j == 1):
+                        b = memo[i + 1][0][k] - prices[i]
+                        nB = memo[i + 1][1][k] + 0
+                        res =  max(b, nB)
+                    elif(j == 0):
+                        s = memo[i + 1][1][k-1] + prices[i]
+                        nS = memo[i + 1][0][k]
+                        res = max(s, nS)
+                    
+                    memo[i][j][k] = res
+        
+        return memo[0][1][k]
