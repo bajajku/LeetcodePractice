@@ -41,3 +41,31 @@ class Solution:
                 res.append(False)
 
         return res
+
+        # BFS soltution
+        courseMap = {i: set() for i in range(numCourses)}
+
+        for p in prerequisites:
+            courseMap[p[1]].add(p[0])
+
+        isPrerequisite = [[False] * numCourses for _ in range(numCourses)]
+
+        for i in range(numCourses):
+            q = deque([i])
+
+            while q:
+                node = q.popleft()
+
+                for adj in courseMap.get(node, []):
+                    # If we have marked i as a prerequisite of adj it implies we
+                    # have visited it. This is equivalent to using a visited
+                    # array.
+                    if not isPrerequisite[adj][i]:
+                        isPrerequisite[adj][i] = True
+                        q.append(adj)
+        
+        res = []
+        for query in queries:
+            res.append(isPrerequisite[query[0]][query[1]])
+
+        return res
