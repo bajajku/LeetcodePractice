@@ -2,6 +2,19 @@ class Solution:
 
     def numDistinct(self, s: str, t: str) -> int:
 
+        '''
+        so this function checks:
+        
+            f(i, j) signifies check occurences of [0...j] in string [0...i]
+        
+         '''
+
+         '''
+         we only increment j if s[i] == s[j]
+
+         and i will always be incremented no matter what,
+         
+         '''
         if(len(t) > len(s)):
             return 0
         
