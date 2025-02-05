@@ -35,3 +35,22 @@ class Solution:
             return res
         
         return(function(0, 0))
+
+        memo = [[False] * (len(p)+1) for _ in range(len(s)+ 1)]
+
+        memo[-1][-1] = True
+
+        for i in range(len(s), -1, -1):
+            for j in range(len(p)-1, -1, -1):
+
+                res = False
+                if(j + 1 < len(p) and p[j + 1] == "*"):
+                    if i < len(s) and (s[i] == p[j] or p[j] == "."):
+                        res = memo[i+1][j] or memo[i][j+2]
+                    else:
+                        res = memo[i][j+2]
+                elif i < len(s) and (s[i] == p[j] or p[j] == "."):
+                    res = memo[i + 1][j + 1]
+                memo[i][j] = res
+        
+        return(memo[0][0])
