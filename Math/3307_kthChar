@@ -1,0 +1,13 @@
+class Solution:
+    def kthCharacter(self, k: int, operations: List[int]) -> str:
+        
+        minIdx = math.ceil(math.log2(k)) - 1
+        cnt = 0
+        while k != 1:
+            cnt += operations[minIdx]
+            k -= 2 ** minIdx
+            minIdx = math.ceil(math.log2(k)) - 1
+        
+        return chr(ord("a") + (cnt % 26))
+
+
